@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunmi Otegbade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #141410;
+  --ink-2: #3d3d37;
+  --ink-3: #7a7a72;
+  --ink-4: #b8b8ae;
+  --paper: #f8f6f0;
+  --warm-white: #fdfcf8;
+  --rule: #e2e0d8;
+  --accent: #1a3a2a;
+  --accent-light: #e8f0eb;
+  --sidebar-w: 260px;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Instrument Sans', system-ui, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SIDEBAR: fixed left column ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--warm-white);
+  border-right: 0.5px solid var(--rule);
+  padding: 3rem 2rem 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.sidebar-name {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.sidebar-tagline {
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.sidebar-divider {
+  width: 24px;
+  height: 0.5px;
+  background: var(--rule);
+  margin-bottom: 2rem;
+}
+.sidebar-bio {
+  font-size: 12.5px;
+  color: var(--ink-2);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 10px;
+}
+.sidebar-credentials { margin-bottom: 2.5rem; }
+.cred-item { display: flex; flex-direction: column; margin-bottom: 10px; }
+.cred-degree { font-size: 12px; font-weight: 500; color: var(--ink); }
+.cred-school { font-size: 11px; color: var(--ink-3); }
+
+.sidebar-nav { list-style: none; margin-bottom: 2.5rem; }
+.sidebar-nav li { margin-bottom: 4px; }
+.sidebar-nav a {
+  font-size: 12px;
+  color: var(--ink-3);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  transition: color 0.15s;
+}
+.sidebar-nav a:hover { color: var(--ink); }
+.sidebar-nav a::before {
+  content: '';
+  width: 12px;
+  height: 0.5px;
+  background: var(--rule);
+  flex-shrink: 0;
+  transition: width 0.2s, background 0.15s;
+}
+.sidebar-nav a:hover::before { width: 20px; background: var(--ink-3); }
+
+.sidebar-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 2rem;
+}
+.kw {
+  font-size: 10px;
+  color: var(--ink-3);
+  border: 0.5px solid var(--rule);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.sidebar-contact {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 0.5px solid var(--rule);
+}
+.contact-row { font-size: 11px; color: var(--ink-3); margin-bottom: 4px; }
+.contact-row a { color: var(--ink-3); text-decoration: none; }
+.contact-row a:hover { color: var(--ink); }
+
+/* ── MAIN: offset by sidebar width ── */
+main {
+  margin-left: var(--sidebar-w);
+  padding: 0 3.5rem 6rem 3.5rem;
+  max-width: 860px;
+}
+
+/* HERO STRIP — bleeds to left edge of main */
+.hero-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+  margin: 0 -3.5rem 4rem -3.5rem;
+}
+.hero-cell { background: var(--paper); padding: 1.75rem 1.5rem; }
+.hero-num {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.hero-lbl {
+  font-size: 10px;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* PULL QUOTE */
+.pull-quote {
+  border-left: 2px solid var(--accent);
+  padding: 1rem 0 1rem 1.5rem;
+  margin: 0 0 3.5rem;
+}
+.pull-quote p {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* SECTIONS */
+section {
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+section.visible { opacity: 1; transform: none; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid var(--rule);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.section-sub {
+  font-size: 11px;
+  color: var(--ink-4);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* PUBLICATIONS */
+.pub-list { display: flex; flex-direction: column; }
+.pub-item {
+  padding: 1.25rem 0;
+  border-bottom: 0.5px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 1.5rem;
+  align-items: start;
+}
+.pub-item:last-child { border-bottom: none; }
+.pub-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+.pub-authors { font-size: 11.5px; color: var(--ink-3); margin-bottom: 4px; line-height: 1.5; }
+.pub-keywords { font-size: 11px; color: var(--ink-4); font-style: italic; }
+.pub-meta { text-align: right; }
+.pub-year { font-size: 11px; color: var(--ink-3); margin-bottom: 4px; white-space: nowrap; }
+.pub-venue { font-size: 10px; color: var(--ink-4); line-height: 1.4; }
+.pub-link {
+  display: inline-block;
+  margin-top: 7px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 0.5px solid currentColor;
+  padding-bottom: 1px;
+}
+.wip-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: var(--accent-light);
+  color: var(--accent);
+  margin-left: 6px;
+  vertical-align: middle;
+  font-style: normal;
+}
+
+/* TEACHING */
+.teaching-list { display: flex; flex-direction: column; }
+.teaching-item {
+  padding: 1.1rem 0;
+  border-bottom: 0.5px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 1rem;
+  align-items: start;
+}
+.teaching-item:last-child { border-bottom: none; }
+.teaching-title { font-size: 13.5px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.teaching-venue { font-size: 12px; color: var(--ink-2); margin-bottom: 2px; line-height: 1.4; }
+.teaching-detail { font-size: 11px; color: var(--ink-3); line-height: 1.4; }
+.teaching-date { font-size: 11px; color: var(--ink-3); text-align: right; white-space: nowrap; padding-top: 2px; }
+
+/* MOVEMENTS */
+.movement-cards { display: flex; flex-direction: column; gap: 1.25rem; }
+.movement-card {
+  border: 0.5px solid var(--rule);
+  padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+  background: var(--warm-white);
+  position: relative;
+}
+.movement-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+}
+.mv-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 3px;
+  font-style: italic;
+}
+.mv-years { font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; margin-bottom: 10px; }
+.mv-desc { font-size: 13px; color: var(--ink-2); line-height: 1.7; margin-bottom: 12px; }
+.mv-nodes { display: flex; flex-direction: column; gap: 7px; }
+.mv-node { display: flex; gap: 10px; font-size: 12px; color: var(--ink-2); line-height: 1.5; align-items: flex-start; }
+.mv-node-flag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--accent-light);
+  padding: 1px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.mv-link { color: var(--ink-3); text-decoration: none; border-bottom: 0.5px solid var(--rule); }
+.mv-link:hover { color: var(--ink); border-color: var(--ink); }
+
+/* DEFINITIONS */
+.key-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 0.5px solid var(--rule);
+}
+.key-cell { background: var(--warm-white); padding: 1.25rem 1.5rem; }
+.key-term {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.key-def { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+.key-def em {
+  color: var(--ink-3);
+  font-style: normal;
+  font-size: 11px;
+  display: block;
+  margin-top: 4px;
+}
+
+/* FOOTER */
+.page-footer {
+  margin-top: 5rem;
+  padding-top: 1.5rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-name { font-family: var(--serif); font-size: 15px; color: var(--ink-3); font-style: italic; }
+.footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.footer-links a { font-size: 11px; color: var(--ink-3); text-decoration: none; letter-spacing: 0.06em; }
+.footer-links a:hover { color: var(--ink); }
+
+/* ── MOBILE NAV BAR (hidden on desktop) ── */
+.mobile-header {
+  display: none;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 720px) {
+
+  /* Sticky top bar */
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--warm-white);
+    border-bottom: 0.5px solid var(--rule);
+    padding: 0.9rem 1.25rem;
+  }
+  .mobile-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .mobile-menu-btn {
+    background: none;
+    border: 0.5px solid var(--rule);
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile-menu-btn span {
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: var(--ink-2);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .mobile-menu-btn.open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  .mobile-menu-btn.open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+  /* Sidebar becomes a slide-down drawer */
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: none;
+    padding: 0 1.25rem;
+    transition: max-height 0.35s ease, padding 0.2s ease;
+    background: var(--warm-white);
+  }
+  .sidebar.open {
+    max-height: 900px;
+    padding: 1.5rem 1.25rem 2rem;
+    border-bottom: 0.5px solid var(--rule);
+  }
+
+  /* Tighten up sidebar internals on mobile */
+  .sidebar-name { font-size: 22px; margin-bottom: 4px; }
+  .sidebar-tagline { margin-bottom: 1.25rem; }
+  .sidebar-divider { margin-bottom: 1.25rem; }
+  .sidebar-bio { margin-bottom: 1.25rem; font-size: 13px; }
+  .sidebar-credentials { margin-bottom: 1.5rem; }
+  .sidebar-nav { margin-bottom: 1.5rem; }
+  .sidebar-keywords { margin-bottom: 1.25rem; }
+  .sidebar-contact { padding-top: 1.25rem; }
+
+  /* Nav links — bigger tap targets */
+  .sidebar-nav a { font-size: 13px; padding: 6px 0; }
+
+  /* Main: no left margin, starts below header */
+  main {
+    margin-left: 0;
+    padding: 0 1.25rem 4rem;
+    max-width: 100%;
+  }
+
+  /* Hero strip: 2-col on mobile */
+  .hero-strip {
+    grid-template-columns: 1fr 1fr;
+    margin: 0 -1.25rem 2.5rem;
+  }
+  .hero-cell { padding: 1.25rem 1rem; }
+  .hero-num { font-size: 24px; }
+
+  /* Pull quote */
+  .pull-quote { margin-bottom: 2.5rem; }
+  .pull-quote p { font-size: 17px; }
+
+  /* Sections */
+  section { margin-bottom: 2.75rem; }
+
+  /* Publications: single column */
+  .pub-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1.1rem 0;
+  }
+  .pub-meta { text-align: left; display: flex; gap: 1rem; align-items: baseline; }
+  .pub-year { margin-bottom: 0; }
+  .pub-title { font-size: 15px; }
+
+  /* Teaching: single column */
+  .teaching-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 1rem 0;
+  }
+  .teaching-date { text-align: left; padding-top: 4px; }
+
+  /* Movements: tighten padding */
+  .movement-card { padding: 1.1rem 1.1rem 1.1rem 1.4rem; }
+  .mv-desc { font-size: 12.5px; }
+  .mv-node { font-size: 12px; }
+
+  /* Definitions: single column */
+  .key-grid { grid-template-columns: 1fr; }
+  .key-cell { padding: 1rem 1.1rem; }
+
+  /* Footer */
+  .page-footer { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .footer-links { gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE HEADER BAR -->
+<header class="mobile-header">
+  <span class="mobile-name">Bunmi Otegbade</span>
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- FIXED SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-name">Bunmi<br>Otegbade</div>
+  <div class="sidebar-tagline">Impact · Technology · Finance</div>
+  <div class="sidebar-divider"></div>
+  <p class="sidebar-bio">Global impact leader in technology and sustainable finance. Senior Director at Ashoka. Researcher. Venture investor. Educator. Network builder.</p>
+  <div class="sidebar-credentials">
+    <div class="sidebar-section-label">Education</div>
+    <div class="cred-item">
+      <span class="cred-degree">MPP, Public Policy</span>
+      <span class="cred-school">Princeton University</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-degree">BSc, Electrical &amp; Computer Engineering</span>
+      <span class="cred-school">Baylor University</span>
+    </div>
+  </div>
+  <div class="sidebar-section-label">On this page</div>
+  <ul class="sidebar-nav">
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#movements">Movements</a></li>
+    <li><a href="#definitions">Definitions</a></li>
+  </ul>
+  <div class="sidebar-section-label">Areas</div>
+  <div class="sidebar-keywords">
+    <span class="kw">Social Impact</span>
+    <span class="kw">Generative AI</span>
+    <span class="kw">Venture Finance</span>
+    <span class="kw">Africa</span>
+    <span class="kw">Diaspora</span>
+    <span class="kw">EdTech</span>
+    <span class="kw">Network Theory</span>
+    <span class="kw">Climate Finance</span>
+  </div>
+  <div class="sidebar-contact">
+    <div class="sidebar-section-label">Links</div>
+    <div class="contact-row"><a href="https://bolowo.notion.site/B-Otegbade-Site-23962618c6f880ba85e0d320ee145f54" target="_blank">Full profile →</a></div>
+    <div class="contact-row"><a href="https://www.tgafrican.com" target="_blank">tgafrican.com →</a></div>
+    <div class="contact-row"><a href="https://bunmiotegbade.medium.com" target="_blank">Medium →</a></div>
+  </div>
+</aside>
+
+<!-- SCROLLABLE MAIN -->
+<main>
+
+  <div class="hero-strip">
+    <div class="hero-cell">
+      <div class="hero-num">25</div>
+      <div class="hero-lbl">Venture investments</div>
+    </div>
+    <div class="hero-cell">
+      <div class="hero-num">4</div>
+      <div class="hero-lbl">Publications</div>
+    </div>
+    <div class="hero-cell">
+      <div class="hero-num">$75M</div>
+      <div class="hero-lbl">VC fundraising</div>
+    </div>
+    <div class="hero-cell">
+      <div class="hero-num">300+</div>
+      <div class="hero-lbl">Global network</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>"Ideas that violate normative ways of thinking, steeped in scientific evidence, with a clear vision of the world to come."</p>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-header">
+      <h2 class="section-title">Publications</h2>
+      <span class="section-sub">Research &amp; writing</span>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Using Gen AI for Collaboration: Limits and Possibilities within Impact Ecosystems <span class="wip-badge">WIP</span></div>
+          <div class="pub-authors">B. Otegbade, IP. Hallerbach, D. Matielo de Carvalho, M. Barrett</div>
+          <div class="pub-keywords">AI · collaboration · ecosystems · affordances · public good</div>
+          <a href="https://docs.google.com/document/d/1MSg_CboFZV4EUMU0xIoqLWOq-oAlWCoh3BgrjJLuqi0/edit" class="pub-link" target="_blank">Draft</a>
+        </div>
+        <div class="pub-meta">
+          <div class="pub-year">2025</div>
+          <div class="pub-venue">Information and Organization</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">A deep learning approach for Maize Lethal Necrosis and Maize Streak Virus disease detection</div>
+          <div class="pub-authors">T. O'Halloran, G. Obaido, B. Otegbade, I. Domor Mienye</div>
+          <div class="pub-keywords">Deep learning · convolutional neural networks</div>
+          <a href="https://doi.org/10.1016/j.mlwa.2024.100556" class="pub-link" target="_blank">Paper</a>
+        </div>
+        <div class="pub-meta">
+          <div class="pub-year">2024</div>
+          <div class="pub-venue">Machine Learning with Applications</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Diversity Accelerates our "Everyone a Changemaker" Future</div>
+          <div class="pub-authors">B. Otegbade, K. Clewett, L. Garcia Duran</div>
+          <div class="pub-keywords">Equity · proximate leaders · social entrepreneurship</div>
+          <a href="https://socialinnovationsjournal.com/index.php/sij/article/view/2029" class="pub-link" target="_blank">Paper</a>
+        </div>
+        <div class="pub-meta">
+          <div class="pub-year">2022</div>
+          <div class="pub-venue">Social Innovations Journal</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Impact Brain: An Architecture for Social Impact Understanding</div>
+          <div class="pub-authors">B. Otegbade, IP. Hallerbach, D. Matielo de Carvalho</div>
+          <div class="pub-keywords">Social impact · systems architecture · measurement</div>
+          <a href="https://bunmiotegbade.medium.com/impact-brain-b7b1d86a8a29" class="pub-link" target="_blank">Paper</a>
+        </div>
+        <div class="pub-meta">
+          <div class="pub-year">2022</div>
+          <div class="pub-venue">Medium / Working paper</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Generative AI Use in the Global South <span class="wip-badge">WIP</span></div>
+          <div class="pub-authors">B. Otegbade et al.</div>
+          <div class="pub-keywords">AI · Global South · emerging markets</div>
+          <a href="https://docs.google.com/document/d/1pSH96_x1bkGtDsQd4wErjknib6SPZ7TXQRMalqyeAqU/edit" class="pub-link" target="_blank">Draft</a>
+        </div>
+        <div class="pub-meta">
+          <div class="pub-year">WIP</div>
+          <div class="pub-venue">In progress</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <div class="section-header">
+      <h2 class="section-title">Teaching</h2>
+      <span class="section-sub">Lectures &amp; guest faculty</span>
+    </div>
+    <div class="teaching-list">
+
+      <div class="teaching-item">
+        <div>
+          <div class="teaching-title">"The Future of Work"</div>
+          <div class="teaching-venue">The Wharton School, University of Pennsylvania</div>
+          <div class="teaching-detail">Dr. Kanyinsola Obayan Arigi, Lauder Institute · INTS 5930: African Futures</div>
+        </div>
+        <div class="teaching-date">Mar 2024</div>
+      </div>
+
+      <div class="teaching-item">
+        <div>
+          <div class="teaching-title">"Generative AI and Social Impact Collaboration"</div>
+          <div class="teaching-venue">University of Cambridge</div>
+          <div class="teaching-detail">Prof. Michael Barrett · Cambridge Judge School of Business &amp; Cambridge Digital Innovation</div>
+        </div>
+        <div class="teaching-date">Oct 2023</div>
+      </div>
+
+      <div class="teaching-item">
+        <div>
+          <div class="teaching-title">"Peer Networks for Diaspora Movement Building"</div>
+          <div class="teaching-venue">ADSEN · Madrid, Spain</div>
+          <div class="teaching-detail">African Diaspora Social Enterprise Network</div>
+        </div>
+        <div class="teaching-date">Sep 2023</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MOVEMENTS -->
+  <section id="movements">
+    <div class="section-header">
+      <h2 class="section-title">Movements in Progress</h2>
+      <span class="section-sub">Long-horizon initiatives</span>
+    </div>
+    <div class="movement-cards">
+
+      <div class="movement-card">
+        <div class="mv-title">Every Teacher a Changemaker</div>
+        <div class="mv-years">2021 — ongoing</div>
+        <div class="mv-desc">Brings a new paradigm to teacher-student norms: empowering educators to empower students to become Changemakers — building agency and civic identity from within classrooms.</div>
+        <div class="mv-nodes">
+          <div class="mv-node">
+            <span class="mv-node-flag">United States</span>
+            <span>Countrywide with Title I schools. Designed with John Gamba (<a href="https://www.gse.upenn.edu/" class="mv-link" target="_blank">Penn GSE</a>) and Michelle Blanchet (<a href="https://theeducatorslab.com/edu-changemakers" class="mv-link" target="_blank">The Educators Lab</a>). Collaboration with American Federation of Teachers and First Book.</span>
+          </div>
+          <div class="mv-node"><span class="mv-node-flag">Nigeria</span><span>With the National Open University of Nigeria — coming soon</span></div>
+          <div class="mv-node"><span class="mv-node-flag">Indonesia</span><span>With Muhammadiyah — coming soon</span></div>
+          <div class="mv-node"><span class="mv-node-flag">United Kingdom</span><span>Coming soon</span></div>
+        </div>
+      </div>
+
+      <div class="movement-card">
+        <div class="mv-title">The Global African</div>
+        <div class="mv-years">2023 — ongoing</div>
+        <div class="mv-desc">A global network cultivated through semi-formal small rooms — connecting African diaspora thinkers, builders, and leaders across the world.</div>
+        <div class="mv-nodes">
+          <div class="mv-node">
+            <span class="mv-node-flag">Network</span>
+            <span>300+ global diaspora network of networkers — operating across youth ecosystems, universities, and government leadership</span>
+          </div>
+          <div class="mv-node">
+            <span class="mv-node-flag">Thesis</span>
+            <span>Early investments in technology and IP through MStreet Ventures · <a href="https://www.tgafrican.com" class="mv-link" target="_blank">tgafrican.com</a></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DEFINITIONS -->
+  <section id="definitions">
+    <div class="section-header">
+      <h2 class="section-title">Definitions</h2>
+      <span class="section-sub">How I use these words</span>
+    </div>
+    <div class="key-grid">
+      <div class="key-cell">
+        <div class="key-term">Impact</div>
+        <div class="key-def">Society-wide, irreversible change at global scale, for the good of all.</div>
+      </div>
+      <div class="key-cell">
+        <div class="key-term">Technology</div>
+        <div class="key-def">Tech transfer for equity. Generative AI for Collaboration for Good. Applied machine learning.<em>Not technology for its own sake.</em></div>
+      </div>
+      <div class="key-cell">
+        <div class="key-term">Finance</div>
+        <div class="key-def">Early bets that advance human potential: climate finance in EVs ($0.5M debt), venture investing (25 companies), venture fundraising ($75M VC).<em>Creative alternative financing for good.</em></div>
+      </div>
+      <div class="key-cell">
+        <div class="key-term">Networks</div>
+        <div class="key-def">Network theory and a 300-person global diaspora network of networkers.<em>Connective tissue for systemic change.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <span class="footer-name">Bunmi Otegbade</span>
+    <div class="footer-links">
+      <a href="https://bolowo.notion.site/B-Otegbade-Site-23962618c6f880ba85e0d320ee145f54" target="_blank">Full profile</a>
+      <a href="https://www.tgafrican.com" target="_blank">tgafrican.com</a>
+      <a href="https://bunmiotegbade.medium.com" target="_blank">Medium</a>
+      <a href="https://github.com/syracusetp/mstreet-ventures" target="_blank">MStreet portfolio</a>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // Section reveal on scroll
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile hamburger toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  if (menuBtn && sidebar) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = sidebar.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
+    });
+    // Close drawer when a nav link is tapped
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        menuBtn.classList.remove('open');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
